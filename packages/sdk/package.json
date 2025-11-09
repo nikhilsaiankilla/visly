@@ -1,43 +1,55 @@
 {
-    "name": "@visly/sdk",
-    "version": "0.1.0",
-    "description": "Visly Web Analytics SDK for Web, React, Vue, Angular",
+    "name": "visly-sdk",
+    "version": "0.1.5",
     "type": "module",
+    "scripts": {
+        "clean": "node -e \"try{require('fs').rmSync('dist',{recursive:true,force:true})}catch{}\"",
+        "build": "npm run clean && npm run build:index && npm run build:react && npm run build:vue && npm run build:angular && npm run build:types",
+        "build:index": "tsup src/index.ts --format esm,cjs --dts --sourcemap --target es2022 --clean",
+        "build:react": "tsup src/react.tsx --format esm,cjs --dts --sourcemap --target es2022",
+        "build:vue": "tsup src/vue.ts --format esm,cjs --dts --sourcemap --target es2022",
+        "build:angular": "tsup src/angular.ts --format esm,cjs --dts --sourcemap --target es2022",
+        "build:types": "tsc -p tsconfig.json --emitDeclarationOnly false"
+    },
     "main": "./dist/index.cjs",
     "module": "./dist/index.js",
     "types": "./dist/index.d.ts",
     "exports": {
         ".": {
             "import": "./dist/index.js",
-            "require": "./dist/index.cjs",
-            "types": "./dist/index.d.ts"
+            "require": "./dist/index.cjs"
         },
         "./react": {
             "import": "./dist/react.js",
-            "require": "./dist/react.cjs",
-            "types": "./dist/react.d.ts"
+            "require": "./dist/react.cjs"
         },
         "./vue": {
             "import": "./dist/vue.js",
-            "require": "./dist/vue.cjs",
-            "types": "./dist/vue.d.ts"
+            "require": "./dist/vue.cjs"
         },
         "./angular": {
             "import": "./dist/angular.js",
-            "require": "./dist/angular.cjs",
-            "types": "./dist/angular.d.ts"
+            "require": "./dist/angular.cjs"
         }
     },
-    "sideEffects": false,
+    "typesVersions": {
+        "*": {
+            "react": [
+                "dist/react.d.ts"
+            ],
+            "vue": [
+                "dist/vue.d.ts"
+            ],
+            "angular": [
+                "dist/angular.d.ts"
+            ]
+        }
+    },
     "files": [
         "dist",
         "README.md",
         "LICENSE"
     ],
-    "scripts": {
-        "build": "tsup",
-        "prepublishOnly": "npm run build"
-    },
     "peerDependencies": {
         "react": ">=18",
         "vue": ">=3",
@@ -52,5 +64,8 @@
     "publishConfig": {
         "access": "public"
     },
-    "license": "MIT"
+    "license": "MIT",
+    "description": "",
+    "keywords": [],
+    "author": ""
 }

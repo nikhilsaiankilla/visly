@@ -18,10 +18,9 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@types/node": "^24.10.0",
-    "rimraf": "^6.1.0",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
+    "tsup": "8.5.0",
+    "typescript": "5.6.3",
+    "esbuild": "0.21.5"
   },
   "dependencies": {
     "fastify": "^5.6.1"
