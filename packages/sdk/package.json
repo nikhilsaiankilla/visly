@@ -1,0 +1,56 @@
+{
+    "name": "@visly/sdk",
+    "version": "0.1.0",
+    "description": "Visly Web Analytics SDK for Web, React, Vue, Angular",
+    "type": "module",
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "import": "./dist/index.js",
+            "require": "./dist/index.cjs",
+            "types": "./dist/index.d.ts"
+        },
+        "./react": {
+            "import": "./dist/react.js",
+            "require": "./dist/react.cjs",
+            "types": "./dist/react.d.ts"
+        },
+        "./vue": {
+            "import": "./dist/vue.js",
+            "require": "./dist/vue.cjs",
+            "types": "./dist/vue.d.ts"
+        },
+        "./angular": {
+            "import": "./dist/angular.js",
+            "require": "./dist/angular.cjs",
+            "types": "./dist/angular.d.ts"
+        }
+    },
+    "sideEffects": false,
+    "files": [
+        "dist",
+        "README.md",
+        "LICENSE"
+    ],
+    "scripts": {
+        "build": "tsup",
+        "prepublishOnly": "npm run build"
+    },
+    "peerDependencies": {
+        "react": ">=18",
+        "vue": ">=3",
+        "@angular/core": ">=15",
+        "@angular/router": ">=15",
+        "rxjs": ">=7"
+    },
+    "devDependencies": {
+        "tsup": "^8.0.1",
+        "typescript": "^5.6.3"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "license": "MIT"
+}
