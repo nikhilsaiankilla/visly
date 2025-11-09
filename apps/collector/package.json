@@ -1,0 +1,16 @@
+{
+    "name": "@visly/collector",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "tsc -p tsconfig.json",
+        "start": "node dist/index.js"
+    },
+    "dependencies": {
+        "fastify": "^4.28.1"
+    },
+    "devDependencies": {
+        "typescript": "^5.6.3",
+        "@types/node": "^20.11.30"
+    }
+}

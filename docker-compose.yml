@@ -1,0 +1,68 @@
+version: "3.9"
+services:
+  collector:
+    build:
+      context: ./apps/collector
+    image: visly-collector:latest
+    container_name: visly-collector
+    restart: unless-stopped
+    environment:
+      PORT: "3001"
+    ports:
+      - "3001:3001"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3001/healthz"]
+      interval: 10s
+      timeout: 2s
+      retries: 5
+      start_period: 10s
+
+  worker:
+    build:
+      context: ./apps/worker
+    image: visly-worker:latest
+    container_name: visly-worker
+    restart: unless-stopped
+    environment:
+      PORT: "3002"
+    ports:
+      - "3002:3002"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3002/healthz"]
+      interval: 10s
+      timeout: 2s
+      retries: 5
+      start_period: 10s
+
+  dashboard:
+    build:
+      context: ./apps/dashboard
+    image: visly-dashboard:latest
+    container_name: visly-dashboard
+    restart: unless-stopped
+    environment:
+      PORT: "3000"
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/api/healthz"]
+      interval: 10s
+      timeout: 2s
+      retries: 5
+      start_period: 20s
+
+  # --- Optional infra to enable later ---
+  # redpanda:
+  #   image: redpandadata/redpanda:v24.1.10
+  #   command:
+  #     - redpanda start --overprovisioned --smp 1 --memory 1G --reserve-memory 0M
+  #       --check=false --node-id=0 --kafka-addr 0.0.0.0:9092 --advertise-kafka-addr redpanda:9092
+  #   ports: ["9092:9092","9644:9644"]
+  #   restart: unless-stopped
+  #
+  # clickhouse:
+  #   image: clickhouse/clickhouse-server:24.8
+  #   ports: ["8123:8123","9000:9000"]
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ./infra/clickhouse-data:/var/lib/clickhouse
