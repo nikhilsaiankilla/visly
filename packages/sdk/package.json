@@ -1,6 +1,6 @@
 {
     "name": "visly-sdk",
-    "version": "0.1.5",
+    "version": "0.1.7",
     "type": "module",
     "scripts": {
         "clean": "node -e \"try{require('fs').rmSync('dist',{recursive:true,force:true})}catch{}\"",
