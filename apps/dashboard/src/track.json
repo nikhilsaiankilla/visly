@@ -1,0 +1,15 @@
+{
+    "ok": true,
+    "data": {
+        "overview": "totals, timeseries, topPages, topReferrers",
+        "engagement": "sessions, avgSession, bounceRate",
+        "behavior": "funnels, flows, clickTargets (maybe empty)",
+        "acquisition": "utm breakdown, conversions, newReturning",
+        "audience": "dau/wau/mau, retention matrix",
+        "tech_geo_ops": "device, geo, latency, eps"
+    },
+    "meta": {
+        "projectId": "PROJECT-123",
+        "rangeDays": 7
+    }
+}

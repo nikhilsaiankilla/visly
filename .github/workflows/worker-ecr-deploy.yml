@@ -1,0 +1,91 @@
+name: Build & Push Worker -> ECR (and optional deploy)
+
+on:
+  push:
+    paths:
+      - "apps/worker/**"
+
+env:
+  AWS_REGION: ap-south-1
+  AWS_ACCOUNT_ID: 438465153985
+  REPO: visly-kafka-worker
+  ECR_URI: ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.REPO }}
+
+jobs:
+  build_and_optional_deploy:
+    name: Build, push to ECR, and optional deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to ECR
+        run: |
+          aws ecr get-login-password --region $AWS_REGION \
+            | docker login --username AWS --password-stdin ${{ env.ECR_URI }}
+
+      - name: Build and push image to ECR
+        uses: docker/build-push-action@v5
+        with:
+          context: ./apps/worker
+          file: ./apps/worker/Dockerfile
+          push: true
+          tags: |
+            ${{ env.ECR_URI }}:latest
+            ${{ env.ECR_URI }}:${{ github.sha }}
+
+      ################################################################
+      # Optional SSH deploy
+      # Runs only if you added SSH_PRIVATE_KEY, EC2_HOST and EC2_USER
+      ################################################################
+      - name: Setup SSH key (for SSH deploy)
+        if: ${{ secrets.SSH_PRIVATE_KEY != '' && secrets.EC2_HOST != '' && secrets.EC2_USER != '' }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H "${{ secrets.EC2_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Pull & restart container on EC2 via SSH
+        if: ${{ secrets.SSH_PRIVATE_KEY != '' && secrets.EC2_HOST != '' && secrets.EC2_USER != '' }}
+        run: |
+          ssh -o StrictHostKeyChecking=yes "${{ secrets.EC2_USER }}"@"${{ secrets.EC2_HOST }}" bash -s <<'EOF'
+            set -eux
+            # login to ECR (EC2 should have instance role or AWS creds)
+            aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 438465153985.dkr.ecr.ap-south-1.amazonaws.com
+            docker pull 438465153985.dkr.ecr.ap-south-1.amazonaws.com/visly-kafka-worker:latest
+            docker rm -f visly-kafka-worker || true
+            docker run -d --name visly-kafka-worker --restart unless-stopped \
+              -e KAFKA_BOOTSTRAP=kafka-internal-host:9092 \
+              438465153985.dkr.ecr.ap-south-1.amazonaws.com/visly-kafka-worker:latest
+          EOF
+
+      ################################################################
+      # Optional SSM deploy (recommended)
+      # Set secret USE_SSM=true to enable
+      ################################################################
+      - name: Deploy via SSM (send command)
+        if: ${{ secrets.USE_SSM == 'true' }}
+        run: |
+          INSTANCE_SELECTOR="Key=tag:Name,Values=kafka-consumer-worker"
+          aws ssm send-command \
+            --document-name "AWS-RunShellScript" \
+            --comment "Deploy visly-kafka-worker from ECR" \
+            --targets "$INSTANCE_SELECTOR" \
+            --parameters commands=[
+              "set -eux",
+              "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 438465153985.dkr.ecr.ap-south-1.amazonaws.com",
+              "docker pull 438465153985.dkr.ecr.ap-south-1.amazonaws.com/visly-kafka-worker:latest",
+              "docker rm -f visly-kafka-worker || true",
+              "docker run -d --name visly-kafka-worker --restart unless-stopped -e KAFKA_BOOTSTRAP=kafka-internal-host:9092 438465153985.dkr.ecr.ap-south-1.amazonaws.com/visly-kafka-worker:latest"
+            ] \
+            --timeout-seconds 600 \
+            --region ap-south-1

@@ -1,0 +1,95 @@
+version: "3.9"
+
+services:
+  # -----------------------
+  # Collector service
+  # -----------------------
+  collector:
+    build:
+      context: ./apps/collector
+    image: visly-collector:dev
+    container_name: visly-collector
+    restart: unless-stopped
+    environment:
+      # Service port
+      PORT: "3001"
+
+      # ClickHouse (Aiven)
+      CLICKHOUSE_URL: "${CLICKHOUSE_URL}"
+      CLICKHOUSE_DATABASE: "${CLICKHOUSE_DATABASE}"
+      CLICKHOUSE_USER_NAME: "${CLICKHOUSE_USER_NAME}"
+      CLICKHOUSE_PASSWORD: "${CLICKHOUSE_PASSWORD}"
+      CLICKHOUSE_BATCH_SIZE: "${CLICKHOUSE_BATCH_SIZE}"
+      CLICKHOUSE_FLUSH_INTERVAL_MS: ${CLICKHOUSE_FLUSH_INTERVAL_MS}
+
+      # Kafka (Aiven) - Use KAFKA_BROKERS (plural) for worker
+      KAFKA_BROKER: "${KAFKA_BROKER}"
+      KAFKA_USERNAME: "${KAFKA_USERNAME}"
+      KAFKA_PASSWORD: "${KAFKA_PASSWORD}"
+      KAFKA_TOPIC: "${KAFKA_TOPIC}"
+      KAFKA_PORT: "${KAFKA_PORT}"
+
+      # Aiven Kafka credentials
+      KAFKA_CLIENT_ID: "${KAFKA_CLIENT_ID}"
+      KAFKA_RETRY_TOPIC: "${KAFKA_RETRY_TOPIC}"
+      KAFKA_CA_CERTIFICATE: "${KAFKA_CA_CERTIFICATE}"
+      KAFKA_DLQ_TOPIC: "${KAFKA_DLQ_TOPIC}"
+      KAFKA_GROUP_ID: "${KAFKA_GROUP_ID}"
+
+    ports:
+      - "3001:3001"
+
+  # -----------------------
+  # Worker service
+  # -----------------------
+  worker:
+    build:
+      context: ./apps/worker
+    image: visly-worker:dev
+    container_name: visly-worker
+    restart: unless-stopped
+    environment:
+      PORT: "3002"
+
+      # ClickHouse (Aiven)
+      CLICKHOUSE_URL: "${CLICKHOUSE_URL}"
+      CLICKHOUSE_DATABASE: "${CLICKHOUSE_DATABASE}"
+      CLICKHOUSE_USER_NAME: "${CLICKHOUSE_USER_NAME}"
+      CLICKHOUSE_PASSWORD: "${CLICKHOUSE_PASSWORD}"
+      CLICKHOUSE_BATCH_SIZE: "${CLICKHOUSE_BATCH_SIZE}"
+      CLICKHOUSE_FLUSH_INTERVAL_MS: ${CLICKHOUSE_FLUSH_INTERVAL_MS}
+
+      # Kafka (Aiven) - Use KAFKA_BROKERS (plural) for worker
+      KAFKA_BROKER: "${KAFKA_BROKER}"
+      KAFKA_USERNAME: "${KAFKA_USERNAME}"
+      KAFKA_PASSWORD: "${KAFKA_PASSWORD}"
+      KAFKA_TOPIC: "${KAFKA_TOPIC}"
+      KAFKA_PORT: "${KAFKA_PORT}"
+
+      # Aiven Kafka credentials
+      KAFKA_CLIENT_ID: "${KAFKA_CLIENT_ID}"
+      KAFKA_RETRY_TOPIC: "${KAFKA_RETRY_TOPIC}"
+      KAFKA_CA_CERTIFICATE: "${KAFKA_CA_CERTIFICATE}"
+      KAFKA_DLQ_TOPIC: "${KAFKA_DLQ_TOPIC}"
+      KAFKA_GROUP_ID: "${KAFKA_GROUP_ID}"
+
+    ports:
+      - "3002:3002"
+
+  # -----------------------
+  # Dashboard (commented out - running on Vercel)
+  # -----------------------
+  # dashboard:
+  #   build:
+  #     context: ./apps/dashboard
+  #   image: visly-dashboard:dev
+  #   container_name: visly-dashboard
+  #   restart: unless-stopped
+  #   environment:
+  #     PORT: "3000"
+  #     CLICKHOUSE_HOST: "${CLICKHOUSE_HOST}"
+  #     CLICKHOUSE_DATABASE: "${CLICKHOUSE_DATABASE}"
+  #     CLICKHOUSE_USER: "${CLICKHOUSE_USER:-default}"
+  #     CLICKHOUSE_PASSWORD: "${CLICKHOUSE_PASSWORD:-}"
+  #   ports:
+  #     - "3000:3000"
