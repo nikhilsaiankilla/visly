@@ -206,63 +206,54 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onDelete, onT
                                 </DropdownMenuTrigger>
 
                                 <DropdownMenuContent align="end" className="w-40">
-                                    <DropdownMenuItem
-                                        className="gap-2 cursor-pointer text-slate-600 focus:text-slate-900"
+                                    <DropdownMenuItem disabled={isLoading || delLoading}
+                                        onClick={handleToggle}
+                                        className="cursor-pointer bg-white hover:bg-white text-black"
                                     >
-                                        <Button
-                                            disabled={isLoading || delLoading}
-                                            onClick={handleToggle}
-                                            className="cursor-pointer bg-white hover:bg-white text-black"
-                                        >
-                                            {isLoading
-                                                ?
+                                        {isLoading
+                                            ?
+                                            <>
+                                                <Loader className="animate-spin" />
+                                                updating
+                                            </>
+                                            :
+                                            is_active ? (
                                                 <>
-                                                    <Loader className="animate-spin" />
-                                                    updating
+                                                    <Power size={14} />
+                                                    <span>Deactivate</span>
                                                 </>
-                                                :
-                                                is_active ? (
-                                                    <>
-                                                        <Power size={14} />
-                                                        <span>Deactivate</span>
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        <CheckCircle2 size={14} className="text-green-600" />
-                                                        <span>Activate</span>
-                                                    </>
-                                                )
-                                            }
-                                        </Button>
+                                            ) : (
+                                                <>
+                                                    <CheckCircle2 size={14} className="text-green-600" />
+                                                    <span>Activate</span>
+                                                </>
+                                            )
+                                        }
                                     </DropdownMenuItem>
 
                                     <DropdownMenuSeparator />
 
                                     <DropdownMenuItem
+                                        disabled={isLoading || delLoading}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            e.preventDefault();
+                                            setOpen(true);
+                                        }}
+                                        className="gap-2 cursor-pointer text-red-600 hover:text-red-600 bg-white hover:bg-white"
                                     >
-                                        <Button
-                                            disabled={isLoading || delLoading}
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                e.preventDefault();
-                                                setOpen(true);
-                                            }}
-                                            className="gap-2 cursor-pointer text-red-600 hover:text-red-600 bg-white hover:bg-white"
-                                        >
-                                            {delLoading
-                                                ?
-                                                <>
-                                                    <Loader className="animate-spin" />
-                                                    Deleting
-                                                </>
-                                                :
-                                                <>
-                                                    <Trash2 size={14} />
-                                                    <span>Delete Project</span>
-                                                </>
-                                            }
-                                        </Button>
-
+                                        {delLoading
+                                            ?
+                                            <>
+                                                <Loader className="animate-spin" />
+                                                Deleting
+                                            </>
+                                            :
+                                            <>
+                                                <Trash2 size={14} />
+                                                <span>Delete Project</span>
+                                            </>
+                                        }
                                     </DropdownMenuItem>
 
                                 </DropdownMenuContent>

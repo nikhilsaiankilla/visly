@@ -84,7 +84,7 @@ export default function DashboardLayout({
         <main className="min-h-screen text-slate-900 p-6 md:p-10 max-w-6xl mx-auto relative">
             <div className="flex flex-row justify-between items-start md:items-center gap-4">
                 <div>
-                    <Link href="/" className="flex items-center font-bold text-xl text-slate-900 gap-2">
+                    <Link href="/dashboard" className="flex items-center font-bold text-xl text-slate-900 gap-2">
                         <Image src={"/visly.png"} alt="visly logo" width={30} height={30} />
                         <span className="hidden md:block">Visly</span>
                     </Link>
