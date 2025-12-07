@@ -22,7 +22,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { signOut } from "next-auth/react";
-import { Layout, LogOut, Router, Trash2 } from "lucide-react";
+import { Book, Layout, LogOut, Router, Trash2 } from "lucide-react";
 import { formatError } from "@/utils/utils";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -54,7 +54,7 @@ const ProfileDropdown = ({ image, userInitials, name, email }: { image?: string;
             <DropdownMenuTrigger>
                 <Avatar className="h-10 w-10 border border-slate-100 cursor-pointer">
                     <AvatarImage src={image || undefined} alt="Profile" />
-                    <AvatarFallback className="bg-linear-to-br from-green-600 to-slate-800 text-white">
+                    <AvatarFallback className="bg-linear-to-br from-green-600 to-green-800 text-white">
                         {userInitials}
                     </AvatarFallback>
                 </Avatar>
@@ -71,7 +71,7 @@ const ProfileDropdown = ({ image, userInitials, name, email }: { image?: string;
                 <DropdownMenuSeparator />
 
                 <DropdownMenuItem
-                    className="w-full justify-center text-slate-600 hover:text-green-600 hover:bg-slate-50 border-slate-200 cursor-pointer"
+                    className="w-full text-slate-600 hover:text-green-600 hover:bg-slate-50 border-slate-200 cursor-pointer"
                     onClick={() => {
                         router.push('/dashboard')
                     }}
@@ -80,9 +80,19 @@ const ProfileDropdown = ({ image, userInitials, name, email }: { image?: string;
                     Dashboard
                 </DropdownMenuItem>
 
+                <DropdownMenuItem
+                    className="w-full text-slate-600 hover:text-green-600 hover:bg-slate-50 border-slate-200 cursor-pointer"
+                    onClick={() => {
+                        router.push('/dashboard')
+                    }}
+                >
+                    <Book size={16} className="mr-2" />
+                    Docs
+                </DropdownMenuItem>
+
 
                 <DropdownMenuItem
-                    className="w-full justify-center text-slate-600 hover:text-red-600 hover:bg-slate-50 border-slate-200 cursor-pointer"
+                    className="w-full text-slate-600 hover:text-red-600 hover:bg-slate-50 border-slate-200 cursor-pointer"
                     onClick={() => {
                         signOut()
                         router.push('/')
@@ -93,7 +103,7 @@ const ProfileDropdown = ({ image, userInitials, name, email }: { image?: string;
                 </DropdownMenuItem>
 
                 <DropdownMenuItem
-                    className="text-red-500 hover:text-red-600 py-1.5 hover:bg-red-50 w-full justify-center border-slate-200 cursor-pointer"
+                    className="text-red-500 hover:text-red-600 py-1.5 hover:bg-red-50 w-full border-slate-200 cursor-pointer"
                     onClick={(e) => {
                         e.stopPropagation();
                         e.preventDefault();

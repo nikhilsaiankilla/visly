@@ -89,8 +89,8 @@ export async function POST(req: NextRequest) {
 
             existing = results[0] || null;
         } catch (dbErr) {
-            console.error("Database query error (SELECT):", formatError(dbErr));
-            throw new Error(`Database query failed: ${formatError(dbErr)}`);
+            console.error("DB error:", dbErr);
+            throw new Error(`Database query failed: ${dbErr}`);
         }
 
         // Create new user

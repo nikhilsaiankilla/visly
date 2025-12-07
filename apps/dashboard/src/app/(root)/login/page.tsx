@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -15,10 +15,13 @@ import {
     CardFooter,
     CardTitle,
 } from "@/components/ui/card";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+    const session = useSession();
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const router = useRouter();
 
     const handleGoogleLogin = async () => {
         setError(null);
@@ -37,6 +40,12 @@ export default function LoginPage() {
         }
     };
 
+    useEffect(() => {
+        if (session.status === 'authenticated') {
+            router.push('/dashboard');
+        }
+    }, [])
+    
     return (
         <div className="min-h-screen w-full bg-slate-50 flex flex-col items-center justify-center relative overflow-hidden">
 
