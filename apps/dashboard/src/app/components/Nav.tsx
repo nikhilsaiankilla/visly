@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Github, LucideGithub, Menu, Star, X } from "lucide-react";
+import { LucideGithub, Menu, X } from "lucide-react";
 import { motion } from "motion/react"
-import { Button } from "./Btn";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import ProfileDropdown from "@/components/profile-dropdown";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 const Nav = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -54,25 +54,25 @@ const Nav = () => {
                     <span className="hidden md:block">Visly</span>
                 </Link>
 
-                {/* Desktop Links */}
-                <div className="hidden md:flex gap-8 text-sm font-medium text-slate-600">
-                    <Link href="/docs" className="hover:text-green-600 transition-colors">Docs</Link>
-                    <Link href="https://github.com/nikhilsaiankilla/visly" target="_blank" className="hover:text-green-600 transition-colors">Github</Link>
-                    {
-                        session?.status === 'authenticated'
-                            ?
-                            <Link href="/dashboard" className="hover:text-green-600 transition-colors">
-                                Dashboard
-                            </Link>
-                            :
-                            <Link href="/login" className="hover:text-green-600 transition-colors">
-                                Login
-                            </Link>
-                    }
-                </div>
-
                 {/* CTA */}
-                <div className="hidden md:flex gap-2">
+                <div className="hidden md:flex gap-5 items-center">
+                    {/* Desktop Links */}
+                    <div className="text-sm font-medium text-slate-600 flex items-center gap-5">
+                        <Link href="/docs" className="hover:text-green-600 transition-colors">Docs</Link>
+                        <Link href="https://github.com/nikhilsaiankilla/visly" target="_blank" className="hover:text-green-600 transition-colors">Github</Link>
+                        {
+                            session?.status === 'authenticated'
+                                ?
+                                <Link href="/dashboard" className="hover:text-green-600 transition-colors">
+                                    Dashboard
+                                </Link>
+                                :
+                                <Link href="/login" className="hover:text-green-600 transition-colors">
+                                    Login
+                                </Link>
+                        }
+                    </div>
+
                     <Link href="https://github.com/nikhilsaiankilla/visly" target="_blank" className="hover:text-green-600 transition-colors flex items-center gap-1">
                         <Badge variant={'outline'} className="outline outline-green-600 shadow-2xl bg-green-600/10">
                             <LucideGithub size={15} />
@@ -94,7 +94,7 @@ const Nav = () => {
                             <Link
                                 href={'/login'}
                             >
-                                <Button>Start for Free</Button>
+                                <Button className="bg-green-600 hover:bg-green-600/90">Start for Free</Button>
                             </Link>
                     }
                 </div>
@@ -135,7 +135,7 @@ const Nav = () => {
                             <Link
                                 href={'/login'}
                             >
-                                <Button>Start for Free</Button>
+                                <Button className="bg-green-600 hover:bg-green-600/90">Start for Free</Button>
                             </Link>
                     }
                 </motion.div>

@@ -1,0 +1,70 @@
+[
+    {
+        "title": "Getting Started",
+        "items": [
+            {
+                "title": "Introduction",
+                "href": "#introduction"
+            },
+            {
+                "title": "Installation",
+                "href": "#installation"
+            },
+            {
+                "title": "Architecture & Security",
+                "href": "#architecture"
+            }
+        ]
+    },
+    {
+        "title": "Framework Guides",
+        "items": [
+            {
+                "title": "React",
+                "href": "#react"
+            },
+            {
+                "title": "Vue 3",
+                "href": "#vue-3"
+            },
+            {
+                "title": "Angular",
+                "href": "#angular"
+            },
+            {
+                "title": "Vanilla JS",
+                "href": "#vanilla-js"
+            }
+        ]
+    },
+    {
+        "title": "API Reference",
+        "items": [
+            {
+                "title": "Client Options",
+                "href": "#client-options"
+            },
+            {
+                "title": "Instance Methods",
+                "href": "#instance-methods"
+            },
+            {
+                "title": "Data Collected",
+                "href": "#data-collected"
+            }
+        ]
+    },
+    {
+        "title": "Advanced",
+        "items": [
+            {
+                "title": "Custom Events",
+                "href": "#advanced-usage"
+            },
+            {
+                "title": "Debugging",
+                "href": "#debugging"
+            }
+        ]
+    }
+]
