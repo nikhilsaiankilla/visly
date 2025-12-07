@@ -77,7 +77,7 @@ const Nav = () => {
                         <Badge variant={'outline'} className="outline outline-green-600 shadow-2xl bg-green-600/10">
                             <LucideGithub size={15} />
                             <span className="text-xs ml-2 px-2 py-0.5 rounded-lg flex items-center">
-                                {starsLoading ? "…" : (stars !== null ? <>{stars}</> : "—")}
+                                {starsLoading ? "…" : (stars !== null ? <>{stars}</> : "-")}
                             </span>
                         </Badge>
                     </Link>

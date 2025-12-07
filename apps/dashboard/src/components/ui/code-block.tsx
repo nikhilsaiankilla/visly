@@ -62,7 +62,7 @@ export const CodeBlock = ({
               <button
                 key={index}
                 onClick={() => setActiveTab(index)}
-                className={`px-3 !py-2 text-xs transition-colors font-sans ${
+                className={`px-3 py-2! text-xs transition-colors font-sans ${
                   activeTab === index
                     ? "text-white"
                     : "text-zinc-400 hover:text-zinc-200"

@@ -9,7 +9,7 @@ import {
     TabsTrigger,
 } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Activity, ArrowRight, ArrowRightCircle, ArrowUpRight, Ban, Calendar, Clock, Cpu, Eye, Filter, Globe, Hash, Layout, Loader, LogIn, Mail, MapPin, Megaphone, Monitor, MousePointer2, MousePointerClick, Repeat, Trash, TrendingDown, Trophy, UserCheck, UserPlus, Users, Zap } from "lucide-react";
+import { Activity, ArrowRight, ArrowRightCircle, ArrowUpRight, Ban, Calendar, Check, Clock, Copy, Cpu, Eye, Filter, Globe, Hash, Layout, Loader, LogIn, Mail, MapPin, Megaphone, Monitor, MousePointer2, MousePointerClick, Repeat, Trash, TrendingDown, Trophy, UserCheck, UserPlus, Users, Zap } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell, Legend, LineChart, Line } from 'recharts';
@@ -189,6 +189,15 @@ export default function Page() {
         }
     };
 
+    const [copied, setCopied] = useState(false);
+
+    const handleCopy = () => {
+        navigator.clipboard.writeText(id);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+        toast.success('Project Id Copied!')
+    };
+
     return (
         <div className="max-w-7xl mx-auto space-y-6 w-full py-8">
             <div className="flex items-center justify-between gap-4">
@@ -196,6 +205,17 @@ export default function Page() {
 
                 {/* Range controls */}
                 <div className="flex items-center gap-2">
+                    <Button
+                        onClick={handleCopy}
+                        className="bg-green-600 hover:bg-green-600/95 cursor-pointer"
+                    >   
+                    Copy Project Id
+                        {copied ? (
+                            <Check size={16} className="text-white" />
+                        ) : (
+                            <Copy size={16} className="text-white" />
+                        )}
+                    </Button>
                     <div className="flex items-center space-x-2">
                         <Button
                             variant={'outline'}
@@ -271,12 +291,6 @@ export default function Page() {
                     </Button>
                 </div>
             </div>
-
-            <Card className="border-slate-200 shadow-sm">
-                <CardContent className="p-6">
-                    <CopyInput value={id} label="Your Project ID" />
-                </CardContent>
-            </Card>
 
             <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v)} defaultValue="overview">
                 <TabsList>

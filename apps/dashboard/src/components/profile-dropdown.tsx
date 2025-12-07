@@ -22,7 +22,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { signOut } from "next-auth/react";
-import { LogOut, Router, Trash2 } from "lucide-react";
+import { Layout, LogOut, Router, Trash2 } from "lucide-react";
 import { formatError } from "@/utils/utils";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -70,34 +70,38 @@ const ProfileDropdown = ({ image, userInitials, name, email }: { image?: string;
 
                 <DropdownMenuSeparator />
 
-                <DropdownMenuItem>
-                    <Button
-                        variant="outline"
-                        className="w-full justify-center text-slate-600 hover:text-red-600 hover:bg-slate-50 border-slate-200"
-                        onClick={() => {
-                            signOut()
-                            router.push('/')
-                        }}
-                    >
-                        <LogOut size={16} className="mr-2" />
-                        Sign Out
-                    </Button>
+                <DropdownMenuItem
+                    className="w-full justify-center text-slate-600 hover:text-green-600 hover:bg-slate-50 border-slate-200 cursor-pointer"
+                    onClick={() => {
+                        router.push('/dashboard')
+                    }}
+                >
+                    <Layout size={16} className="mr-2" />
+                    Dashboard
                 </DropdownMenuItem>
 
-                <DropdownMenuItem>
-                    {/* Stop propagation so the dropdown doesn't treat this click as a selection */}
-                    <Button
-                        variant="outline"
-                        className="text-red-500 hover:text-red-600 py-1.5 hover:bg-red-50 w-full justify-center border-slate-200"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            e.preventDefault();
-                            setOpen(true);
-                        }}
-                    >
-                        <Trash2 size={14} className="mr-2" />
-                        Delete Account
-                    </Button>
+
+                <DropdownMenuItem
+                    className="w-full justify-center text-slate-600 hover:text-red-600 hover:bg-slate-50 border-slate-200 cursor-pointer"
+                    onClick={() => {
+                        signOut()
+                        router.push('/')
+                    }}
+                >
+                    <LogOut size={16} className="mr-2" />
+                    Sign Out
+                </DropdownMenuItem>
+
+                <DropdownMenuItem
+                    className="text-red-500 hover:text-red-600 py-1.5 hover:bg-red-50 w-full justify-center border-slate-200 cursor-pointer"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        setOpen(true);
+                    }}
+                >
+                    <Trash2 size={14} className="mr-2" />
+                    Delete Account
                 </DropdownMenuItem>
             </DropdownMenuContent>
 

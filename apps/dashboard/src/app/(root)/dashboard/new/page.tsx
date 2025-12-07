@@ -8,7 +8,6 @@ import Link from "next/link";
 
 // Custom Components
 import { CopyInput } from "@/app/components/copy-input";
-import { CodeBlock } from "@/app/components/code-block";
 
 // Shadcn UI Components
 import { Button } from "@/components/ui/button";
@@ -25,6 +24,7 @@ import {
 import { toast } from "sonner"
 import { FrameworkId, FRAMEWORKS, ONBOARDING_STEPS } from "@/app/data/instruction-steps";
 import { formatError } from "@/utils/utils";
+import { CodeBlock } from "@/components/ui/code-block";
 
 export default function NewProjectPage() {
     const router = useRouter();
@@ -228,6 +228,7 @@ export default function NewProjectPage() {
                                                         <h4 className="font-semibold text-slate-900">{step.title}</h4>
                                                         <p className="text-sm text-slate-500 mb-3">{step.description}</p>
                                                         <CodeBlock
+                                                            filename="app.jsx"
                                                             code={step.code(generatedProjectId)}
                                                             language={step.language}
                                                         />
