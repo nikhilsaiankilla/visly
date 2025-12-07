@@ -1,5 +1,8 @@
 # ---- build ----
 FROM node:20-alpine AS build
+# Force IPv4 first so Node doesn't die on IPv6-only resolution
+ENV NODE_OPTIONS=--dns-result-order=ipv4first
+
 WORKDIR /app
 
 # install deps
