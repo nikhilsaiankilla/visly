@@ -41,7 +41,22 @@ const ProfileDropdown = ({ image, userInitials, name, email }: { image?: string;
             if (value !== "DELETE") return toast.error("The confirmation text must be exactly: DELETE");
 
             console.log("Account delete handler");
-            // close dialog after action
+
+            const res = await fetch('/aapi/account', {
+                method: 'DELETE',
+            })
+
+            if (res.ok) {
+                return toast.error('Something went wrong please try again later!!!')
+            }
+
+            const json = await res.json();
+
+            if (!json.ok) {
+                return toast.error(json.error || 'Something went wrong please try again later!!!')
+            }
+
+            toast.success('Account deleted successfully')
             setOpen(false);
         } catch (error: unknown) {
             const err = formatError(error);

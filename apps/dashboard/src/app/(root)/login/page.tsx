@@ -83,10 +83,10 @@ export default function LoginPage() {
                             variant="outline"
                             onClick={handleGoogleLogin}
                             disabled={isLoading}
-                            className="w-full h-12 font-medium bg-green-600 hover:bg-green-600/90 text-white hover:text-white hover:shadow-2xl relative transition-all duration-200 ease-in"
+                            className="w-full h-12 font-medium bg-green-600 hover:bg-green-600/95 text-white hover:text-white hover:shadow-2xl relative transition-all duration-200 ease-in"
                         >
                             {isLoading ? (
-                                <Loader2 className="w-5 h-5 animate-spin text-[#6A8E58]" />
+                                <Loader2 className="w-5 h-5 animate-spin text-white" />
                             ) : (
                                 <>
                                     <div className="absolute left-4">

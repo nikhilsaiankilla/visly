@@ -58,6 +58,7 @@ const Nav = () => {
                 <div className="hidden md:flex gap-5 items-center">
                     {/* Desktop Links */}
                     <div className="text-sm font-medium text-slate-600 flex items-center gap-5">
+                        <Link href="/" className="hover:text-green-600 transition-colors">Home</Link>
                         <Link href="/docs" className="hover:text-green-600 transition-colors">Docs</Link>
                         <Link href="https://github.com/nikhilsaiankilla/visly" target="_blank" className="hover:text-green-600 transition-colors">Github</Link>
                         {
@@ -112,6 +113,7 @@ const Nav = () => {
                     animate={{ opacity: 1, y: 0 }}
                     className="md:hidden border-b border-slate-100 bg-white px-4 py-4 space-y-4"
                 >
+                    <Link href="/" className="block text-sm font-medium text-slate-600">Home</Link>
                     <Link href="/docs" className="block text-sm font-medium text-slate-600">docs</Link>
                     <Link href="https://github.com/nikhilsaiankilla/visly" target="_blank" className="block text-sm font-medium text-slate-600">Github</Link>
                     {

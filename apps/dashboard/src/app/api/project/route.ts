@@ -137,7 +137,7 @@ export async function DELETE(req: NextRequest) {
     }
 }
 
-function escapeClickhouseString(s: string) {
+export function escapeClickhouseString(s: string) {
     // ClickHouse string literal escaping: double single-quotes inside single-quoted literal
     // e.g. O'Reilly -> 'O''Reilly'
     return s.replace(/'/g, "''");
