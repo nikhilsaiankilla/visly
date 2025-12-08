@@ -109,7 +109,7 @@ export default function DocsLayout({
                             v1.0
                         </span>
                     </Link>
-                    
+
                     <nav className="space-y-8">
                         {sidebarNav.map((section) => (
                             <div key={section.title}>
@@ -149,26 +149,25 @@ export default function DocsLayout({
                             <span className="hidden md:block">Visly</span>
                         </Link>
 
-                        {/* Desktop Links */}
-                        <div className="hidden md:flex gap-8 text-sm font-medium text-slate-600">
-                            <Link href="/" className="hover:text-green-600 transition-colors">Home</Link>
-                            <Link href="/docs" className="hover:text-green-600 transition-colors">Docs</Link>
-                            <Link href="https://github.com/nikhilsaiankilla/visly" target="_blank" className="hover:text-green-600 transition-colors">Github</Link>
-                            {
-                                session?.status === 'authenticated'
-                                    ?
-                                    <Link href="/dashboard" className="hover:text-green-600 transition-colors">
-                                        Dashboard
-                                    </Link>
-                                    :
-                                    <Link href="/login" className="hover:text-green-600 transition-colors">
-                                        Login
-                                    </Link>
-                            }
-                        </div>
-
                         {/* CTA */}
                         <div className="hidden md:flex gap-2">
+                            <div className="flex gap-8 text-sm font-medium text-slate-600">
+                                <Link href="/" className="hover:text-green-600 transition-colors">Home</Link>
+                                <Link href="/docs" className="hover:text-green-600 transition-colors">Docs</Link>
+                                <Link href="https://github.com/nikhilsaiankilla/visly" target="_blank" className="hover:text-green-600 transition-colors">Github</Link>
+                                {
+                                    session?.status === 'authenticated'
+                                        ?
+                                        <Link href="/dashboard" className="hover:text-green-600 transition-colors">
+                                            Dashboard
+                                        </Link>
+                                        :
+                                        <Link href="/login" className="hover:text-green-600 transition-colors">
+                                            Login
+                                        </Link>
+                                }
+                            </div>
+
                             <Link href="https://github.com/nikhilsaiankilla/visly" target="_blank" className="hover:text-green-600 transition-colors flex items-center gap-1">
                                 <Badge variant={'outline'} className="outline outline-green-600 shadow-2xl bg-green-600/10">
                                     <LucideGithub size={15} />
