@@ -82,10 +82,9 @@ export default function DocsLayout({
         <div className="flex min-h-screen flex-col md:flex-row bg-white font-sans text-slate-900">
             {/* Mobile Top Bar */}
             <div className="md:hidden flex items-center justify-between p-4 border-b border-slate-200 bg-white sticky top-0 z-50">
-                <div className="flex items-center gap-2 font-bold text-lg">
-                    <BookOpen className="w-6 h-6 text-green-600" />
-                    <span>Visly Docs</span>
-                </div>
+                <Link href="/" className="flex items-center font-bold text-xl text-slate-900 gap-2">
+                    <Image src={'/visly.png'} alt="visly logo" width={30} height={30} />
+                </Link>
                 <button
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                     className="p-2 text-slate-600 hover:bg-slate-100 rounded-md"
@@ -103,14 +102,14 @@ export default function DocsLayout({
             >
                 <div className="h-full overflow-y-auto p-6 scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent">
                     {/* Desktop Logo */}
-                    <div className="hidden md:flex font-bold text-slate-900 text-xl mb-8 items-center gap-2">
-                        <BookOpen className="w-6 h-6 text-green-600" />
-                        Visly{" "}
+                    <Link href="/" className="flex items-center font-bold text-xl text-slate-900 gap-2">
+                        <Image src={'/visly.png'} alt="visly logo" width={30} height={30} />
+                        <span className="hidden md:block">Visly</span>
                         <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full border border-green-200">
                             v1.0
                         </span>
-                    </div>
-
+                    </Link>
+                    
                     <nav className="space-y-8">
                         {sidebarNav.map((section) => (
                             <div key={section.title}>
