@@ -1,6 +1,3 @@
-// app/docs/page.tsx
-"use client";
-
 import { CodeBlock } from "@/components/ui/code-block";
 import React, { JSX } from "react";
 
@@ -10,7 +7,7 @@ const SectionTitle: React.FC<{ id: string; children: React.ReactNode }> = ({
 }) => (
   <h2
     id={id}
-    className="text-2xl md:text-3xl font-bold text-slate-900 scroll-mt-24"
+    className="text-2xl md:text-3xl font-bold text-slate-900 scroll-mt-24 mt-16 mb-6 border-b border-slate-100 pb-2"
   >
     {children}
   </h2>
@@ -22,7 +19,7 @@ const SubTitle: React.FC<{ id?: string; children: React.ReactNode }> = ({
 }) => (
   <h3
     id={id}
-    className="text-xl font-semibold text-slate-900 mt-6 scroll-mt-24"
+    className="text-xl font-semibold text-slate-800 mt-10 mb-4 scroll-mt-24"
   >
     {children}
   </h3>
@@ -32,14 +29,14 @@ const Table: React.FC<{
   head: string[];
   rows: (string | number | boolean | JSX.Element)[][];
 }> = ({ head, rows }) => (
-  <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
+  <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white my-6 shadow-sm">
     <table className="min-w-full text-left text-sm">
-      <thead className="bg-slate-50 border-b border-slate-200">
+      <thead className="bg-slate-50/80 border-b border-slate-200">
         <tr>
           {head.map((h, index) => (
             <th
               key={index}
-              className="px-4 py-2 text-xs font-semibold uppercase tracking-wide text-slate-500"
+              className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500"
             >
               {h}
             </th>
@@ -50,10 +47,15 @@ const Table: React.FC<{
         {rows.map((r, i) => (
           <tr
             key={i}
-            className={i % 2 === 0 ? "bg-white" : "bg-slate-50/50"}
+            className={`transition-colors hover:bg-slate-50 ${
+              i % 2 === 0 ? "bg-white" : "bg-slate-50/30"
+            }`}
           >
             {r.map((c, j) => (
-              <td key={j} className="px-4 py-2 align-top text-slate-700">
+              <td
+                key={j}
+                className="px-4 py-3 align-top text-slate-700 font-mono text-xs md:text-sm"
+              >
                 {typeof c === "boolean" ? String(c) : c}
               </td>
             ))}
@@ -64,461 +66,330 @@ const Table: React.FC<{
   </div>
 );
 
+// --- Main Page ---
+
 export default function DocsPage() {
   return (
-    <div className="space-y-12">
-      {/* Top header + short description */}
-      <header className="space-y-4">
-        <p className="text-xs font-mono uppercase tracking-[0.2em] text-green-600">
-          Visly SDK Documentation
-        </p>
-        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900">
-          Visly SDK
-        </h1>
-        <p className="text-lg md:text-xl text-slate-600 max-w-2xl">
-          Lightweight, privacy-safe web analytics SDK for modern web apps.
-          Track pageviews, clicks, and custom events across React, Angular, Vue,
-          and vanilla JavaScript — without blocking or slowing down your app.
+    <div className="space-y-12 pb-32 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Header */}
+      <header className="space-y-6 pt-10" id="introduction">
+        <div className="space-y-2">
+          <p className="text-xs font-mono uppercase tracking-[0.2em] text-blue-600 font-semibold">
+            Documentation
+          </p>
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900">
+            Visly SDK
+          </h1>
+        </div>
+        <p className="text-lg md:text-xl text-slate-600 max-w-2xl leading-relaxed">
+          Zero-dependency, privacy-friendly analytics. Drop a single script tag
+          into your website to start tracking pageviews, clicks, and custom
+          events instantly. No npm install required.
         </p>
 
-        {/* One-page Table of Contents */}
-        <nav className="mt-4 grid gap-2 text-sm text-slate-600 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Quick Links / TOC */}
+        <nav className="mt-8 grid gap-3 text-sm font-medium text-slate-600 sm:grid-cols-2 lg:grid-cols-3">
           {[
-            { id: "installation", label: "Installation" },
-            { id: "framework-integrations", label: "Framework Integrations" },
+            { id: "getting-started", label: "Getting Started" },
+            { id: "configuration", label: "Configuration" },
+            { id: "auto-tracking", label: "Auto Tracking" },
+            { id: "manual-tracking", label: "Manual Tracking" },
+            { id: "nextjs", label: "Next.js Guide" },
             { id: "api-reference", label: "API Reference" },
-            { id: "data-collected", label: "Data Collected" },
-            { id: "features", label: "Features" },
-            { id: "advanced-usage", label: "Advanced Usage" },
-            { id: "debugging", label: "Debugging" },
-            { id: "architecture", label: "Architecture" },
           ].map((s) => (
             <a
               key={s.id}
               href={`#${s.id}`}
-              className="inline-flex items-center justify-between rounded-md border border-slate-200 bg-slate-50 px-3 py-2 hover:bg-white hover:border-slate-300 transition-colors"
+              className="group flex items-center justify-between rounded-lg border border-slate-200 bg-white px-4 py-3 hover:border-blue-300 hover:shadow-md transition-all"
             >
-              <span>{s.label}</span>
-              <span className="text-[10px] text-slate-400">#</span>
+              <span className="group-hover:text-blue-600">{s.label}</span>
+              <span className="text-slate-300 group-hover:text-blue-400">→</span>
             </a>
           ))}
         </nav>
       </header>
 
-      {/* Installation */}
-      <section className="space-y-4" id="installation">
-        <SectionTitle id="installation">Installation</SectionTitle>
-        <p className="text-slate-600">
-          Install the Visly SDK using your preferred package manager.
+      <hr className="border-slate-100" />
+
+      {/* 1. Getting Started */}
+      <section id="getting-started">
+        <SectionTitle id="getting-started">Getting Started</SectionTitle>
+        <p className="text-slate-600 mb-6 leading-relaxed">
+          Add the Visly script to the{" "}
+          <code className="bg-slate-100 px-1.5 py-0.5 rounded text-pink-600 font-mono text-sm">
+            &lt;head&gt;
+          </code>{" "}
+          of your website. That's it. It will automatically initialize and start
+          tracking pageviews.
         </p>
+
         <CodeBlock
-          language="bash"
-          filename="bash"
-          highlightLines={[9, 13, 14, 18]}
-          code={`npm install visly-sdk
-# or
-yarn add visly-sdk
-# or
-pnpm add visly-sdk`}
+          language="html"
+          filename="index.html"
+          code={`<script 
+  defer 
+  src="https://oyoxrtpspyfxsndrdzvm.supabase.co/storage/v1/object/public/visly%20script/visly.js"
+  data-project-id="YOUR_PROJECT_ID"
+></script>`}
         />
 
-        <SubTitle>Quick Start (Vanilla JS)</SubTitle>
-        <CodeBlock
-          filename="main.js"
-          language="jsx"
-          code={`import { VislyClient } from "visly-sdk";
-
-const visly = new VislyClient({ projectId: "YOUR_PROJECT_ID" });
-
-// Track a pageview
-visly.track("pageview");
-
-// Track a custom event
-visly.track("signup_click", { plan: "pro", source: "landing" });`}
-        />
+        <div className="bg-blue-50/50 border border-blue-100 rounded-lg p-4 mt-6 flex gap-3 text-sm text-blue-800">
+          <span className="text-xl">💡</span>
+          <div>
+            <strong>Performance Tip:</strong> The script is loaded
+            asynchronously with <code>defer</code>, so it won't block your page
+            load or affect your Core Web Vitals.
+          </div>
+        </div>
       </section>
 
-      {/* Framework Integrations */}
-      <section className="space-y-6" id="framework-integrations">
-        <SectionTitle id="framework-integrations">
-          Framework Integrations
-        </SectionTitle>
-
-        {/* Vanilla JS */}
-        <SubTitle id="vanilla-js">Vanilla JS</SubTitle>
-        <p className="text-slate-600">
-          Use the core Visly client in any JavaScript app without a framework.
-        </p>
-        <CodeBlock
-          language="js"
-          filename="vanilla.js"
-          code={`import { VislyClient } from "visly-sdk";
-
-const visly = new VislyClient({ projectId: "YOUR_PROJECT_ID" });
-
-// Track a pageview
-visly.track("pageview");
-
-// Track a custom event
-visly.track("signup_click", { plan: "pro", source: "landing" });`}
-        />
-
-        {/* React */}
-        <SubTitle id="react">React</SubTitle>
-        <p className="text-slate-600">
-          Use the React bindings to automatically track route changes and send
-          custom events from components.
-        </p>
-        <CodeBlock
-          filename="app.jsx"
-          language="react"
-          code={`import { VislyProvider, useVisly, VislyRouteTracker } from "visly-sdk/react";
-
-export default function App() {
-  return (
-    <VislyProvider projectId="YOUR_PROJECT_ID">
-      <VislyRouteTracker pathname={window.location.pathname} />
-      <Home />
-    </VislyProvider>
-  );
-}
-
-function Home() {
-  const visly = useVisly();
-
-  return (
-    <button onClick={() => visly.track("cta_click", { label: "Sign Up" })}>
-      Sign Up
-    </button>
-  );
-}`}
-        />
-
-        {/* Angular */}
-        <SubTitle id="angular">Angular</SubTitle>
-        <p className="text-slate-600">
-          Initialize Visly in your root module and use directives in templates
-          to tag elements.
-        </p>
-        <CodeBlock
-          filename="app.module.ts"
-          language="angular"
-          code={`import { VislyModule, VislyService } from "visly-sdk/angular";
-
-@NgModule({
-  imports: [BrowserModule, AppRoutingModule, VislyModule],
-  bootstrap: [AppComponent],
-})
-export class AppModule {
-  constructor(visly: VislyService) {
-    visly.init({ projectId: "YOUR_PROJECT_ID" });
-  }
-}`}
-        />
-        <CodeBlock
-          filename="app.module.ts"
-          language="angular"
-          code={`<button visly="signup_button">Sign Up</button>`}
-        />
-
-        {/* Vue 3 */}
-        <SubTitle id="vue-3">Vue 3</SubTitle>
-        <p className="text-slate-600">
-          Register the Visly plugin in your app entrypoint, then use the
-          composable in components.
-        </p>
-        <CodeBlock
-          filename="main.ts"
-          language="vue"
-          code={`import { createApp } from "vue";
-import App from "./App.vue";
-import { VislyPlugin } from "visly-sdk/vue";
-
-const app = createApp(App);
-app.use(VislyPlugin, { projectId: "YOUR_PROJECT_ID" });
-app.mount("#app");`}
-        />
-        <CodeBlock
-          filename="VueComponent.ts"
-          language="vue"
-          code={`<script setup lang="ts">
-import { useVisly } from "visly-sdk/vue";
-
-const visly = useVisly();
-
-function signup() {
-  visly.track("signup_click");
-}
-</script>
-
-<template>
-  <button @click="signup">Sign Up</button>
-</template>`}
-        />
-      </section>
-
-      {/* API Reference */}
-      <section className="space-y-6" id="api-reference">
-        <SectionTitle id="api-reference">API Reference</SectionTitle>
-
-        <SubTitle id="constructor">Constructor</SubTitle>
-        <p className="text-slate-600">
-          Create a new client instance with configuration options.
+      {/* 2. Configuration */}
+      <section id="configuration">
+        <SectionTitle id="configuration">Configuration</SectionTitle>
+        <p className="text-slate-600 mb-6">
+          Configure Visly by adding <code>data-</code> attributes directly to
+          the script tag.
         </p>
 
-        <CodeBlock
-          filename="TypeScript"
-          language="js"
-          code={`const visly = new VislyClient(options);`}
-        />
-
-        <SubTitle id="client-options">Client Options</SubTitle>
         <Table
-          head={["Option", "Type", "Default", "Description"]}
+          head={["Attribute", "Type", "Default", "Description"]}
           rows={[
             [
-              <code key="projectId">projectId</code>,
+              <span className="font-bold text-slate-900" key="1">
+                data-project-id
+              </span>,
               "string",
               "—",
-              "Required. Your project identifier.",
+              "Required. Your unique project identifier.",
             ],
             [
-              <code key="endpoint">endpoint</code>,
+              "data-endpoint",
               "string",
-              <code key="default">/api/e</code>,
-              "API endpoint for event ingestion.",
+              "(default)",
+              "Custom ingestion endpoint (if self-hosting).",
             ],
             [
-              <code key="flushInterval">flushInterval</code>,
-              "number",
-              "8000",
-              "Flush interval in milliseconds.",
-            ],
-            [
-              <code key="maxBatch">maxBatch</code>,
-              "number",
-              "40",
-              "Maximum events per batch.",
-            ],
-            [
-              <code key="sampleRate">sampleRate</code>,
-              "number",
-              "1",
-              "Sampling rate between 0 and 1.",
-            ],
-            [
-              <code key="errorSampleRate">errorSampleRate</code>,
-              "number",
-              "1",
-              "Sampling rate for error events.",
-            ],
-            [
-              <code key="captureText">captureText</code>,
-              "boolean",
-              "false",
-              "Capture visible element text (hashed by default).",
-            ],
-            [
-              <code key="debug">debug</code>,
+              "data-debug",
               "boolean",
               "false",
               "Enable verbose console logging for development.",
             ],
-          ]}
-        />
-
-        <SubTitle id="instance-methods">Instance Methods</SubTitle>
-        <Table
-          head={["Method", "Description"]}
-          rows={[
             [
-              <code key="track">
-                track(name: string, props?: Record&lt;string, unknown&gt;)
-              </code>,
-              "Send an event with optional properties.",
-            ],
-            [
-              <code key="identify">identify(id: string)</code>,
-              "Set a persistent user ID.",
-            ],
-            [
-              <code key="setSession">setSession(id: string)</code>,
-              "Set or override session ID.",
-            ],
-            [
-              <code key="flush">flush(beacon?: boolean)</code>,
-              "Manually flush buffered events.",
+              "data-capture-text",
+              "boolean",
+              "false",
+              "If true, captures the inner text of clicked elements.",
             ],
           ]}
         />
       </section>
 
-      {/* Data Collected */}
-      <section className="space-y-6" id="data-collected">
-        <SectionTitle id="data-collected">
-          Data Collected per Event
-        </SectionTitle>
-        <Table
-          head={["Field", "Description"]}
-          rows={[
-            ["event", "Event name (e.g. pageview, click)."],
-            ["event_time", "Unix timestamp in milliseconds."],
-            ["project_id", "Project identifier."],
-            ["path", "Current pathname."],
-            ["url", "Full page URL."],
-            ["referrer", "Referrer URL."],
-            ["viewport_w / viewport_h", "Viewport dimensions."],
-            ["session_id / user_id", "Persistent UUID identifiers."],
-            ["ua", "User-Agent string."],
-            ["utm", "UTM params (source, medium, campaign, etc.)."],
-            [
-              "el_name, el_type, el_id, el_class",
-              "Click target metadata.",
-            ],
-            ["el_text_hash", "SHA-256 hash of visible text of element."],
-          ]}
+      {/* 3. Auto Tracking */}
+      <section id="auto-tracking">
+        <SectionTitle id="auto-tracking">Auto-Tracking (No-Code)</SectionTitle>
+        <p className="text-slate-600 mb-6">
+          Visly can automatically track clicks on specific elements without
+          writing any JavaScript. Just add the{" "}
+          <code className="bg-slate-100 px-1.5 py-0.5 rounded text-purple-600 font-mono text-sm">
+            data-va
+          </code>{" "}
+          attribute to any HTML element.
+        </p>
+
+        <SubTitle>Example</SubTitle>
+        <CodeBlock
+          language="html"
+          filename="HTML"
+          code={`<button data-va="signup_btn">
+  Get Started
+</button>
+
+<a href="/pricing" data-va="nav_pricing">Pricing</a>`}
+        />
+      </section>
+
+      {/* 4. Manual Tracking */}
+      <section id="manual-tracking">
+        <SectionTitle id="manual-tracking">Manual Tracking</SectionTitle>
+        <p className="text-slate-600 mb-6">
+          Once the script loads, it exposes a global{" "}
+          <code className="bg-slate-100 px-1.5 py-0.5 rounded text-purple-600 font-mono text-sm">
+            window.visly
+          </code>{" "}
+          object. Use this to track custom events or identify users.
+        </p>
+
+        <SubTitle>Track Custom Events</SubTitle>
+        <CodeBlock
+          language="javascript"
+          filename="app.js"
+          code={`// Track a simple event
+window.visly.track("purchase_completed");
+
+// Track with custom properties
+window.visly.track("add_to_cart", {
+  item_id: "sku_123",
+  price: 49.99,
+  currency: "USD"
+});`}
         />
 
-        <SubTitle id="example-payload">Example payload</SubTitle>
+        <SubTitle id="identifying-users">Identify Users</SubTitle>
+        <p className="text-slate-600 mb-4">
+          Link anonymous sessions to a specific user ID when they log in.
+        </p>
         <CodeBlock
-          filename="JSON"
-          language="json"
-          code={`{
-  "event": "click",
-  "event_time": 1730567890123,
-  "project_id": "demo",
-  "path": "/pricing",
-  "url": "https://example.com/pricing",
-  "referrer": "https://google.com",
-  "viewport_w": 1440,
-  "viewport_h": 900,
-  "session_id": "sess_123",
-  "user_id": "user_abc",
-  "ua": "Mozilla/5.0 ...",
-  "utm": { "source": "google", "campaign": "ads" },
-  "el_name": "signup_button",
-  "el_text_hash": "ab12cdef..."
+          language="javascript"
+          filename="app.js"
+          code={`// Call this after successful login
+window.visly.identify("user_555");`}
+        />
+      </section>
+
+      {/* 5. Framework Guides */}
+      <section id="frameworks">
+        <SectionTitle id="frameworks">Framework Guides</SectionTitle>
+
+        <SubTitle id="nextjs">Next.js (App Router)</SubTitle>
+        <p className="text-slate-600 mb-4">
+          Add the script in your root layout. Using the native{" "}
+          <code>&lt;script&gt;</code> tag inside <code>&lt;head&gt;</code> is
+          often simplest for external scripts.
+        </p>
+        <CodeBlock
+          language="tsx"
+          filename="app/layout.tsx"
+          code={`export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <head>
+        <script 
+          defer 
+          src="https://oyoxrtpspyfxsndrdzvm.supabase.co/storage/v1/object/public/visly%20script/visly.js" 
+          data-project-id="YOUR_PROJECT_ID"
+        ></script>
+      </head>
+      <body>
+        {children}
+      </body>
+    </html>
+  )
+}`}
+        />
+
+        <SubTitle id="react">React (SPA)</SubTitle>
+        <p className="text-slate-600 mb-4">
+          Simply add the script tag to your{" "}
+          <code className="text-sm font-mono">public/index.html</code> file.
+        </p>
+        <CodeBlock
+          language="html"
+          filename="public/index.html"
+          code={`<head>
+  <script 
+    defer 
+    src="https://oyoxrtpspyfxsndrdzvm.supabase.co/storage/v1/object/public/visly%20script/visly.js"
+    data-project-id="YOUR_PROJECT_ID">
+  </script>
+</head>`}
+        />
+
+        <SubTitle id="typescript">TypeScript Support</SubTitle>
+        <p className="text-slate-600 mb-4">
+          If you are using TypeScript, add this type definition to your{" "}
+          <code>global.d.ts</code> or <code>types.d.ts</code> to avoid window
+          errors.
+        </p>
+        <CodeBlock
+          language="typescript"
+          filename="global.d.ts"
+          code={`export {};
+
+declare global {
+  interface Window {
+    visly: {
+      track: (name: string, props?: Record<string, any>) => void;
+      identify: (id: string) => void;
+    };
+  }
 }`}
         />
       </section>
 
-      {/* Features */}
-      <section className="space-y-4" id="features">
-        <SectionTitle id="features">Features</SectionTitle>
-        <ul className="list-disc list-inside space-y-1 text-slate-700">
-          <li>Automatic pageview & click tracking.</li>
-          <li>Framework-agnostic (React, Angular, Vue, Vanilla JS).</li>
-          <li>Event batching & background flushing.</li>
-          <li>Fail-safe by design — never throws in production code paths.</li>
-          <li>SSR-friendly usage patterns.</li>
-          <li>Debug mode for development.</li>
-          <li>NDJSON event output ready for ClickHouse / BigQuery pipelines.</li>
-        </ul>
-      </section>
+      {/* 6. API Reference */}
+      <section id="api-reference">
+        <SectionTitle id="api-reference">API Reference</SectionTitle>
 
-      {/* Advanced Usage */}
-      <section className="space-y-4" id="advanced-usage">
-        <SectionTitle id="advanced-usage">Advanced Usage</SectionTitle>
-        <CodeBlock
-          filename="Advanced events"
-          language="js"
-          code={`// Track purchase event
-visly.track("purchase", {
-  order_id: "ORD123",
-  amount: 2500,
-  currency: "INR",
-  coupon: "WELCOME50",
-});
-
-// Manual flush (e.g., before page unload)
-window.addEventListener("beforeunload", () => visly.flush(true));`}
+        <SubTitle id="api-track">window.visly.track(name, props?)</SubTitle>
+        <Table
+          head={["Parameter", "Type", "Required", "Description"]}
+          rows={[
+            [
+              <code>name</code>,
+              "string",
+              "Yes",
+              "The name of the event (e.g., 'click', 'signup').",
+            ],
+            [
+              <code>props</code>,
+              "object",
+              "No",
+              "A flat JSON object with additional metadata.",
+            ],
+          ]}
         />
-      </section>
 
-      {/* Debugging */}
-      <section className="space-y-4" id="debugging">
-        <SectionTitle id="debugging">Debugging</SectionTitle>
-        <p className="text-slate-600">
-          Enable debug mode during development to see detailed logs in the
-          console.
-        </p>
-        <CodeBlock
-          filename="Debug mode"
-          language="js"
-          code={`const visly = new VislyClient({ projectId: "demo", debug: true });`}
+        <SubTitle id="api-identify">window.visly.identify(userId)</SubTitle>
+        <Table
+          head={["Parameter", "Type", "Required", "Description"]}
+          rows={[
+            [
+              <code>userId</code>,
+              "string",
+              "Yes",
+              "The unique ID of the user from your database.",
+            ],
+          ]}
         />
-        <CodeBlock
-          filename="Example logs"
-          language="js"
-          code={`[visly] projectId not provided — client disabled
-[visly] sendBeacon failed, falling back to fetch`}
-        />
-      </section>
-
-      {/* Architecture */}
-      <section className="space-y-4" id="architecture">
-        <SectionTitle id="architecture">Architecture</SectionTitle>
-        <p className="text-slate-600">
-          Visly uses a buffer-first model to avoid blocking user interactions
-          and to minimize network overhead.
-        </p>
-        <ul className="list-disc list-inside space-y-1 text-slate-700">
-          <li>Events are queued in memory.</li>
-          <li>
-            At each <code className="font-mono">flushInterval</code> (default
-            8000ms), a batch is sent as NDJSON to <code>/api/e</code>.
-          </li>
-          <li>
-            If a request fails, events are requeued (up to a max queue size of
-            ~1000 events).
-          </li>
-          <li>
-            <code className="font-mono">navigator.sendBeacon</code> is used
-            when the page unloads, with a fetch fallback.
-          </li>
-        </ul>
       </section>
 
       {/* Footer author block */}
-      <section className="mt-10 border-t border-slate-200 pt-6 text-sm text-slate-600">
-        <p className="font-semibold text-slate-800 mb-1">
-          About the author – Nikhil Sai Ankilla
-        </p>
-        <p className="mb-2">
-          Full Stack Developer • Open for SDE roles (Frontend / Backend / Full
-          Stack / Platform).
-        </p>
-        <div className="flex flex-wrap gap-3 text-xs">
-          <a
-            href="mailto:nikhilsaiankilla@gmail.com"
-            className="underline underline-offset-2"
-          >
-            nikhilsaiankilla@gmail.com
-          </a>
-          <a
-            href="https://x.com/nikhilbuildss"
-            target="_blank"
-            rel="noreferrer"
-            className="underline underline-offset-2"
-          >
-            @nikhilbuildss
-          </a>
-          <a
-            href="https://nikhilsaiankilla.blog"
-            target="_blank"
-            rel="noreferrer"
-            className="underline underline-offset-2"
-          >
-            Portfolio
-          </a>
-          <a
-            href="https://www.linkedin.com/in/nikhilsaiankilla/"
-            target="_blank"
-            rel="noreferrer"
-            className="underline underline-offset-2"
-          >
-            LinkedIn
-          </a>
+      <section className="mt-20 border-t border-slate-200 pt-8 text-sm text-slate-500">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+          <div>
+            <p className="font-semibold text-slate-900">
+              Built by Nikhil Sai Ankilla
+            </p>
+            <p className="mt-1">
+              Full Stack Developer • Open for SDE roles.
+            </p>
+          </div>
+          <div className="flex gap-6 text-xs font-medium uppercase tracking-wider">
+            <a
+              href="https://x.com/nikhilbuildss"
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-blue-600 transition-colors"
+            >
+              Twitter
+            </a>
+            <a
+              href="https://www.linkedin.com/in/nikhilsaiankilla/"
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-blue-700 transition-colors"
+            >
+              LinkedIn
+            </a>
+            <a
+              href="https://nikhilsai.in"
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-green-600 transition-colors"
+            >
+              Portfolio
+            </a>
+          </div>
         </div>
       </section>
     </div>

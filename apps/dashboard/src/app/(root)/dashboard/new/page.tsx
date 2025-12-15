@@ -13,7 +13,7 @@ import { CopyInput } from "@/app/components/copy-input";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"; // NEW IMPORT
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
     Card,
     CardContent,
@@ -21,10 +21,79 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { toast } from "sonner"
-import { FrameworkId, FRAMEWORKS, ONBOARDING_STEPS } from "@/app/data/instruction-steps";
+import { toast } from "sonner";
 import { formatError } from "@/utils/utils";
 import { CodeBlock } from "@/components/ui/code-block";
+
+// --- NEW LOCAL CONFIGURATION ---
+// We define these here to ensure they match your new Script Tag architecture immediately.
+
+const SCRIPT_URL = "https://oyoxrtpspyfxsndrdzvm.supabase.co/storage/v1/object/public/visly%20script/visly.js";
+
+type FrameworkId = 'nextjs' | 'react' | 'html';
+
+const FRAMEWORKS: { id: FrameworkId; label: string }[] = [
+    { id: 'nextjs', label: 'Next.js' },
+    { id: 'react', label: 'React' },
+    { id: 'html', label: 'HTML / Vanilla' },
+];
+
+const ONBOARDING_STEPS = {
+    nextjs: [
+        {
+            id: 'install',
+            title: 'Add Script to Root Layout',
+            description: 'Add the script component to your app/layout.tsx file.',
+            language: 'tsx',
+            code: (projectId: string) => `import Script from 'next/script'
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>
+        {children}
+        <Script 
+          src="${SCRIPT_URL}"
+          data-project-id="${projectId}"
+          strategy="afterInteractive"
+        />
+      </body>
+    </html>
+  )
+}`
+        }
+    ],
+    react: [
+        {
+            id: 'install',
+            title: 'Add to index.html',
+            description: 'Place the script tag inside the <head> of your public/index.html file.',
+            language: 'html',
+            code: (projectId: string) => `<head>
+  <script 
+    defer 
+    src="${SCRIPT_URL}"
+    data-project-id="${projectId}">
+  </script>
+</head>`
+        }
+    ],
+    html: [
+        {
+            id: 'install',
+            title: 'Add to Head',
+            description: 'Paste this snippet into the <head> section of your website.',
+            language: 'html',
+            code: (projectId: string) => `<script 
+  defer 
+  src="${SCRIPT_URL}"
+  data-project-id="${projectId}"
+></script>`
+        }
+    ]
+};
+
+// -------------------------------
 
 export default function NewProjectPage() {
     const router = useRouter();
@@ -33,7 +102,7 @@ export default function NewProjectPage() {
     const [formData, setFormData] = useState({ name: "", domain: "" });
     const [generatedProjectId, setGeneratedProjectId] = useState("");
 
-    // NEW: State for selected framework
+    // State for selected framework
     const [selectedFramework, setSelectedFramework] = useState<FrameworkId>('nextjs');
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -228,7 +297,7 @@ export default function NewProjectPage() {
                                                         <h4 className="font-semibold text-slate-900">{step.title}</h4>
                                                         <p className="text-sm text-slate-500 mb-3">{step.description}</p>
                                                         <CodeBlock
-                                                            filename="app.jsx"
+                                                            filename={selectedFramework === 'nextjs' ? 'layout.tsx' : 'index.html'}
                                                             code={step.code(generatedProjectId)}
                                                             language={step.language}
                                                         />

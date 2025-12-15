@@ -110,7 +110,7 @@ export default function DocsLayout({
                         </span>
                     </Link>
 
-                    <nav className="space-y-8">
+                    <nav className="space-y-8 mt-10">
                         {sidebarNav.map((section) => (
                             <div key={section.title}>
                                 <h4 className="font-semibold text-slate-900 text-sm tracking-wider uppercase mb-3">
@@ -150,8 +150,8 @@ export default function DocsLayout({
                         </Link>
 
                         {/* CTA */}
-                        <div className="hidden md:flex gap-2">
-                            <div className="flex gap-8 text-sm font-medium text-slate-600">
+                        <div className="hidden md:flex gap-2 items-center">
+                            <div className="flex gap-4 text-sm font-medium text-slate-600 mr-4">
                                 <Link href="/" className="hover:text-green-600 transition-colors">Home</Link>
                                 <Link href="/docs" className="hover:text-green-600 transition-colors">Docs</Link>
                                 <Link href="https://github.com/nikhilsaiankilla/visly" target="_blank" className="hover:text-green-600 transition-colors">Github</Link>

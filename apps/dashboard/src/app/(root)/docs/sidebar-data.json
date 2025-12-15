@@ -8,11 +8,28 @@
             },
             {
                 "title": "Installation",
-                "href": "#installation"
+                "href": "#getting-started"
             },
             {
-                "title": "Architecture & Security",
-                "href": "#architecture"
+                "title": "Configuration",
+                "href": "#configuration"
+            }
+        ]
+    },
+    {
+        "title": "Usage",
+        "items": [
+            {
+                "title": "Auto-Tracking (No-Code)",
+                "href": "#auto-tracking"
+            },
+            {
+                "title": "Manual Tracking",
+                "href": "#manual-tracking"
+            },
+            {
+                "title": "Identifying Users",
+                "href": "#identifying-users"
             }
         ]
     },
@@ -20,20 +37,16 @@
         "title": "Framework Guides",
         "items": [
             {
-                "title": "React",
+                "title": "Next.js (App Router)",
+                "href": "#nextjs"
+            },
+            {
+                "title": "React (SPA)",
                 "href": "#react"
             },
             {
-                "title": "Vue 3",
-                "href": "#vue-3"
-            },
-            {
-                "title": "Angular",
-                "href": "#angular"
-            },
-            {
-                "title": "Vanilla JS",
-                "href": "#vanilla-js"
+                "title": "TypeScript",
+                "href": "#typescript"
             }
         ]
     },
@@ -41,29 +54,12 @@
         "title": "API Reference",
         "items": [
             {
-                "title": "Client Options",
-                "href": "#client-options"
+                "title": "window.visly.track",
+                "href": "#api-track"
             },
             {
-                "title": "Instance Methods",
-                "href": "#instance-methods"
-            },
-            {
-                "title": "Data Collected",
-                "href": "#data-collected"
-            }
-        ]
-    },
-    {
-        "title": "Advanced",
-        "items": [
-            {
-                "title": "Custom Events",
-                "href": "#advanced-usage"
-            },
-            {
-                "title": "Debugging",
-                "href": "#debugging"
+                "title": "window.visly.identify",
+                "href": "#api-identify"
             }
         ]
     }
