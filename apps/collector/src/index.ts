@@ -261,9 +261,14 @@ app.post("/e", async (req: any, reply: any) => {
 
         const projectId = canonicalEvents[0]?.project_id ?? null;
 
+        console.log('isActive before checking in the redis ', isActive);
+
         try {
             const key = `is_active:${projectId}`;
+            console.log('key to check the isActive ', key);
             const val = await redis.get<boolean>(key);
+
+            console.log('is_active after fetching from redis ', val);
 
             // Default: true if missing (optional — or set false instead)
             isActive = val !== false;
@@ -274,6 +279,8 @@ app.post("/e", async (req: any, reply: any) => {
             // You decide — but safer is: block sending to Kafka.
             isActive = false;
         }
+
+         console.log('after updaing is active ', isActive);
 
         // If project disabled, drop events silently
         if (!isActive) {
