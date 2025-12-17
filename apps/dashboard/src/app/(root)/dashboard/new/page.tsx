@@ -28,7 +28,7 @@ import { CodeBlock } from "@/components/ui/code-block";
 // --- NEW LOCAL CONFIGURATION ---
 // We define these here to ensure they match your new Script Tag architecture immediately.
 
-const SCRIPT_URL = "https://oyoxrtpspyfxsndrdzvm.supabase.co/storage/v1/object/public/visly%20script/visly.js";
+const SCRIPT_URL = "https://oyoxrtpspyfxsndrdzvm.supabase.co/storage/v1/object/public/visly%20script/visly-v1.js";
 
 type FrameworkId = 'nextjs' | 'react' | 'html';
 

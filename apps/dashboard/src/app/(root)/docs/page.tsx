@@ -128,7 +128,7 @@ export default function DocsPage() {
           filename="index.html"
           code={`<script 
   defer 
-  src="https://oyoxrtpspyfxsndrdzvm.supabase.co/storage/v1/object/public/visly%20script/visly.js"
+  src="https://oyoxrtpspyfxsndrdzvm.supabase.co/storage/v1/object/public/visly%20script/visly-v1.js"
   data-project-id="YOUR_PROJECT_ID"
 ></script>`}
         />
@@ -265,7 +265,7 @@ window.visly.identify("user_555");`}
       <head>
         <script 
           defer 
-          src="https://oyoxrtpspyfxsndrdzvm.supabase.co/storage/v1/object/public/visly%20script/visly.js" 
+          src="https://oyoxrtpspyfxsndrdzvm.supabase.co/storage/v1/object/public/visly%20script/visly-v1.js" 
           data-project-id="YOUR_PROJECT_ID"
         ></script>
       </head>
@@ -288,7 +288,7 @@ window.visly.identify("user_555");`}
           code={`<head>
   <script 
     defer 
-    src="https://oyoxrtpspyfxsndrdzvm.supabase.co/storage/v1/object/public/visly%20script/visly.js"
+    src="https://oyoxrtpspyfxsndrdzvm.supabase.co/storage/v1/object/public/visly%20script/visly-v1.js"
     data-project-id="YOUR_PROJECT_ID">
   </script>
 </head>`}
