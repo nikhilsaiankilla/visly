@@ -12,12 +12,15 @@ Use this as the single source of truth for what is deployed where and under whic
 - Notes: Managed ClickHouse cluster with automated backups.
 
 ### Messaging / Streaming
-#### Kafka (Aiven)
-- Provider: Aiven
-- Service: Apache Kafka
-- Project / Account: ankillanikhilsai
-- Purpose: Event streaming pipeline (Collector → Worker → ClickHouse)
-- Notes: SASL_SSL enabled; topics provisioned per service.
+## Kafka Worker (AWS EC2)
+- Provider: AWS
+- Service: EC2 Instance
+- Account: nikhilsaiankilla
+- Purpose: Kafka consumer → processes events → writes to ClickHouse
+- Status: Disabled / Removed
+Notes:
+Background worker has been intentionally shut down to optimize infrastructure cost for demo and portfolio usage.
+The system architecture, Dockerized worker, and deployment setup remain intact and can be re-enabled when required.
 
 ### Cache / Key-Value Store
 #### Redis (Upstash)
